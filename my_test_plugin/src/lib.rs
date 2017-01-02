@@ -28,19 +28,13 @@ impl Plugin for MyTestPlugin {
     fn init(&self) {
 		println!("{}", "(my_test_plugin) fn: init()");
     	
-    	HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path.push(Box::new(ActionMountStaticFilePath::new(10)));
-    	HOOK_REGISTRY.lock().unwrap().filter_the_content.push(Box::new(FilterTheContent::new(0)));
+    	HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path.push(Box::new(ActionMountStaticFilePath{priority: 10}));
+    	HOOK_REGISTRY.lock().unwrap().filter_the_content.push(Box::new(FilterTheContent{priority: 0}));
 	}
 }
 
 pub struct ActionMountStaticFilePath {
 	priority: i32
-}
-
-impl ActionMountStaticFilePath {
-    fn new(p: i32) -> ActionMountStaticFilePath {
-        ActionMountStaticFilePath {priority: p}
-    }
 }
 
 impl Hook for ActionMountStaticFilePath {
@@ -58,19 +52,10 @@ pub struct FilterTheContent {
     priority: i32
 }
 
-impl FilterTheContent {
-    fn new(p: i32) -> FilterTheContent {
-        FilterTheContent {priority: p}
-    }
-}
-
 impl Hook for FilterTheContent {
     fn filter_the_content(&self, content: String) -> String {
         let owned_string: String = content.to_owned();
         let borrowed_string: &str = "world";
-
-        //owned_string.push_str(borrowed_string);
-        //owned_string
 
         let temp = "test".to_string();
         let new_owned_string = temp + &owned_string + borrowed_string;
