@@ -26,21 +26,21 @@ impl Plugin for MyTestPlugin {
     }
 
     fn init(&self) {
-		println!("{}", "(my_test_plugin) fn: init()");
-    	
-    	HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path.push(Box::new(ActionMountStaticFilePath{priority: 10}));
-    	HOOK_REGISTRY.lock().unwrap().filter_the_content.push(Box::new(FilterTheContent{priority: 0}));
-	}
+        println!("{}", "(my_test_plugin) fn: init()");
+        
+        HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path.push(Box::new(ActionMountStaticFilePath{priority: 10}));
+        HOOK_REGISTRY.lock().unwrap().filter_the_content.push(Box::new(FilterTheContent{priority: 0}));
+    }
 }
 
 pub struct ActionMountStaticFilePath {
-	priority: i32
+    priority: i32
 }
 
 impl Hook for ActionMountStaticFilePath {
     fn action_mount_static_file_path(&self, mount: &mut Mount){
-    	println!("{}", "(my_test_plugin) fn: mount_action_mount_static_file_path()");
-		mount.mount("/my_test_plugin/public", Static::new(Path::new("../my_test_plugin/public/")));
+        println!("{}", "(my_test_plugin) fn: mount_action_mount_static_file_path()");
+        mount.mount("/my_test_plugin/public", Static::new(Path::new("../my_test_plugin/public/")));
     }
     
     fn priority(&self) -> i32 {

@@ -32,9 +32,9 @@ impl App {
     }
 
     pub fn start(&self) {
-    	for plugin in PLUGIN_REGISTRY.lock().unwrap().plugins.iter_mut() {
-			plugin.init();
-		}
+        for plugin in PLUGIN_REGISTRY.lock().unwrap().plugins.iter_mut() {
+            plugin.init();
+        }
 
         let mut router = Router::new();
 
@@ -56,15 +56,15 @@ impl App {
         let mut mount = Mount::new();
         mount.mount("/", main);
 
-	    (HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path).sort_by(|a, b| (a.priority()).cmp((&b.priority())));
+        (HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path).sort_by(|a, b| (a.priority()).cmp((&b.priority())));
 
-		for hook in HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path.iter_mut() {
-			println!("{:?}", hook.priority());
-			hook.action_mount_static_file_path(&mut mount);
-		}
+        for hook in HOOK_REGISTRY.lock().unwrap().action_mount_static_file_path.iter_mut() {
+            println!("{:?}", hook.priority());
+            hook.action_mount_static_file_path(&mut mount);
+        }
 
-		println!("{}", "Starting server...");
-		Iron::new(mount).http("localhost:3000").unwrap();
+        println!("{}", "Starting server...");
+        Iron::new(mount).http("localhost:3000").unwrap();
     }
 }
 

@@ -2,7 +2,7 @@ use std::sync::Mutex;
 use app_trait::Plugin;
 
 lazy_static! {
-	pub static ref PLUGIN_REGISTRY: Mutex<PluginRegistry> = Mutex::new(PluginRegistry::new());
+    pub static ref PLUGIN_REGISTRY: Mutex<PluginRegistry> = Mutex::new(PluginRegistry::new());
 }
 
 pub struct PluginRegistry {

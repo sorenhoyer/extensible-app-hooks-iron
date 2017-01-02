@@ -2,7 +2,7 @@ use std::sync::Mutex;
 use app_trait::Hook;
 
 lazy_static! {
-	pub static ref HOOK_REGISTRY: Mutex<HookRegistry> = Mutex::new(HookRegistry::new());
+    pub static ref HOOK_REGISTRY: Mutex<HookRegistry> = Mutex::new(HookRegistry::new());
 }
 
 pub struct HookRegistry {
